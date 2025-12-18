@@ -1,0 +1,160 @@
+/* =========================
+   RESET
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #f4f6f8;
+  color: #1f2937;
+}
+
+/* =========================
+   RIBBON
+========================= */
+.ribbon {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 10px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.group:last-child {
+  border-right: none;
+}
+
+.group.right {
+  margin-left: auto;
+}
+
+.ribbon button,
+.ribbon select,
+.ribbon input[type="color"] {
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ribbon button:hover,
+.ribbon select:hover {
+  background: #f3f4f6;
+}
+
+.ribbon button.active {
+  background: #e0e7ff;
+  border-color: #6366f1;
+}
+
+/* =========================
+   PAGE WRAPPER
+========================= */
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px 80px;
+}
+
+/* =========================
+   EDITOR
+========================= */
+#editor {
+  width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  padding: 64px;
+  border-radius: 10px;
+  outline: none;
+  line-height: 1.6;
+  caret-color: #4f46e5;
+  display: block;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Force visible typing area */
+#editor:empty::before {
+  content: "Start typing…";
+  color: #9ca3af;
+}
+
+/* Paragraph spacing */
+#editor p {
+  margin: 0 0 12px;
+}
+
+/* =========================
+   PAGE BREAK
+========================= */
+.page-break {
+  height: 0;
+  margin: 40px 0;
+  border-top: 1px dashed #d1d5db;
+  page-break-after: always;
+}
+
+/* =========================
+   STATUS BAR
+========================= */
+.status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 14px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+/* =========================
+   SELECTION
+========================= */
+::selection {
+  background: #c7d2fe;
+}
+
+/* =========================
+   PRINT
+========================= */
+@media print {
+  body {
+    background: none;
+  }
+
+  .ribbon,
+  .status {
+    display: none;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  #editor {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}

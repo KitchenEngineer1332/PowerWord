@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Power Word Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="ribbon">
+
+  <div class="group">
+    <button data-cmd="bold"><b>B</b></button>
+    <button data-cmd="italic"><i>I</i></button>
+    <button data-cmd="underline"><u>U</u></button>
+  </div>
+
+  <div class="group">
+    <select id="font">
+      <option>Arial</option>
+      <option>Calibri</option>
+      <option>Georgia</option>
+      <option>Times New Roman</option>
+    </select>
+
+    <select id="size">
+      <option value="3">12</option>
+      <option value="4" selected>14</option>
+      <option value="5">18</option>
+      <option value="6">24</option>
+    </select>
+
+    <input type="color" id="color">
+  </div>
+
+  <div class="group">
+    <button data-cmd="justifyLeft">⯇</button>
+    <button data-cmd="justifyCenter">≡</button>
+    <button data-cmd="justifyRight">⯈</button>
+    <button data-cmd="justifyFull">☰</button>
+  </div>
+
+  <div class="group">
+    <button data-cmd="insertUnorderedList">• List</button>
+    <button data-cmd="insertOrderedList">1. List</button>
+  </div>
+
+  <div class="group">
+    <button id="clear">Clear</button>
+    <button id="pageBreak">Page Break</button>
+  </div>
+
+  <div class="group right">
+    <button id="save">Save</button>
+    <button id="load">Load</button>
+    <button id="print">Print</button>
+  </div>
+
+</div>
+
+<!-- ✅ THIS WAS MISSING -->
+<div class="page">
+  <div id="editor" contenteditable="true"></div>
+</div>
+
+<!-- ✅ STATUS BAR -->
+<div class="status">
+  Words: <span id="words">0</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
