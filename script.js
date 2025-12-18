@@ -116,37 +116,64 @@ pageBreak.onclick = () => {
   editor.focus();
 };
 
+const statusMsg = document.getElementById("statusMsg");
+
 /* =========================
-   SAVE (SAFE)
+   STATUS HELPER
+========================= */
+function setStatus(msg) {
+  statusMsg.textContent = msg;
+  setTimeout(() => (statusMsg.textContent = "Ready"), 2000);
+}
+
+/* =========================
+   SAVE (NON-BLOCKING)
 ========================= */
 save.onclick = () => {
   ensureContent();
-  localStorage.setItem("doc", editor.innerHTML);
+
+  const html = editor.innerHTML.trim();
+  if (!html || html === "<p><br></p>") {
+    setStatus("Nothing to save");
+    return;
+  }
+
+  localStorage.setItem("doc", html);
+  setStatus("Document saved");
 };
 
 /* =========================
-   LOAD (SAFE, NON-DESTRUCTIVE)
+   LOAD (SAFE)
 ========================= */
 load.onclick = () => {
-  const saved =
-    localStorage.getItem("doc") ||
-    localStorage.getItem("autosave");
+  const savedDoc = localStorage.getItem("doc");
 
-  editor.innerHTML = saved && saved.trim()
-    ? saved
-    : "<p><br></p>";
+  if (savedDoc && savedDoc.trim()) {
+    editor.innerHTML = savedDoc;
+    setStatus("Document loaded");
+  } else {
+    setStatus("No saved document");
+    return;
+  }
 
   ensureContent();
   editor.focus();
 };
 
 /* =========================
-   PRINT (WORD-LIKE)
+   PRINT (GUARANTEED CONTENT)
 ========================= */
 print.onclick = () => {
   ensureContent();
-  window.print();
+
+  if (editor.innerText.trim().length === 0) {
+    editor.innerHTML = "<p><br></p>";
+  }
+
+  setStatus("Preparing print…");
+  setTimeout(() => window.print(), 50);
 };
+
 
 /* =========================
    KEYBOARD SHORTCUTS
@@ -176,4 +203,70 @@ window.onload = () => {
     editor.innerHTML = saved;
   }
   ensureContent();
+};
+
+darkToggle.onclick = () => {
+  document.body.classList.toggle("dark");
+  localStorage.setItem(
+    "dark",
+    document.body.classList.contains("dark")
+  );
+};
+
+if (localStorage.getItem("dark") === "true") {
+  document.body.classList.add("dark");
+}
+
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.key === "f") {
+    e.preventDefault();
+    findBox.hidden = !findBox.hidden;
+  }
+});
+
+findBtn.onclick = () => {
+  const q = findText.value;
+  if (!q) return;
+
+  editor.innerHTML = editor.innerHTML.replaceAll(
+    q,
+    `<mark>${q}</mark>`
+  );
+};
+
+replaceBtn.onclick = () => {
+  editor.innerHTML = editor.innerHTML.replaceAll(
+    `<mark>${findText.value}</mark>`,
+    replaceText.value
+  );
+};
+
+tableBtn.onclick = () => {
+  const table = document.createElement("table");
+  table.border = "1";
+  table.style.borderCollapse = "collapse";
+  table.innerHTML = `
+    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+  `;
+  table.querySelectorAll("td").forEach(td => {
+    td.contentEditable = true;
+    td.style.padding = "8px";
+  });
+
+  document.execCommand("insertHTML", false, table.outerHTML);
+};
+
+exportDoc.onclick = () => {
+  const html = `
+    <html><body>${editor.innerHTML}</body></html>
+  `;
+  const blob = new Blob([html], {
+    type: "application/msword"
+  });
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "document.doc";
+  a.click();
 };
