@@ -158,3 +158,45 @@ body {
     border-radius: 0;
   }
 }
+
+/* =========================
+   DARK MODE
+========================= */
+body.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+body.dark .ribbon,
+body.dark .status {
+  background: #020617;
+  border-color: #1e293b;
+}
+
+body.dark .page {
+  background: none;
+}
+
+body.dark #editor {
+  background: #020617;
+  color: #e5e7eb;
+  box-shadow: none;
+}
+
+body.dark .ribbon button,
+body.dark .ribbon select {
+  background: #020617;
+  color: #e5e7eb;
+  border-color: #1e293b;
+}
+
+#findBox {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: white;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  z-index: 200;
+}
