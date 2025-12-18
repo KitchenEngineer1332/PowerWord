@@ -9,6 +9,8 @@
 
 <div class="ribbon">
 
+  <button id="darkToggle">Dark</button>
+
   <div class="group">
     <button data-cmd="bold"><b>B</b></button>
     <button data-cmd="italic"><i>I</i></button>
@@ -54,7 +56,10 @@
     <button id="save">Save</button>
     <button id="load">Load</button>
     <button id="print">Print</button>
+    <button id="exportDoc">Export</button>
   </div>
+
+  <button id="tableBtn">Table</button>
 
 </div>
 
@@ -65,8 +70,18 @@
 
 <!-- ✅ STATUS BAR -->
 <div class="status">
-  Words: <span id="words">0</span>
+  <span id="statusMsg">Ready</span>
+  <span style="float:right">Words: <span id="words">0</span></span>
 </div>
+
+<div id="findBox" hidden>
+  <input id="findText" placeholder="Find">
+  <input id="replaceText" placeholder="Replace">
+  <button id="findBtn">Find</button>
+  <button id="replaceBtn">Replace All</button>
+</div>
+
+
 
 <script src="script.js"></script>
 </body>
